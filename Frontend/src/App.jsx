@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 
 export default function App() {
   return (
-    <>
+    <div className="bg-black min-h-screen text-white">
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -13,6 +13,6 @@ export default function App() {
           <Route path="/create" element={<CreateBlog />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
