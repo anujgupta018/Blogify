@@ -5,7 +5,8 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [editPostId, setEditPostId] = useState(null);
+  const [editPost, setEditPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     getPosts();
@@ -28,7 +29,7 @@ const Home = () => {
       });
       if (response.status === 200) {
         toast.success("Blog deleted successfully");
-        getPosts();
+        getPosts(); // Refresh posts after deletion
       } else {
         toast.error("Failed to delete post");
       }
@@ -38,11 +39,8 @@ const Home = () => {
   };
 
   const handleEditClick = (id) => {
-    if (editPostId === id) {
-      setEditPostId(null);
-    } else {
-      setEditPostId(id);
-    }
+    setEditPost((prev) => (prev === id ? null : id));
+    setSelectedPost(id);
   };
 
   return (
@@ -68,7 +66,7 @@ const Home = () => {
             <h3 className="text-gray-400 font-semibold">{post.description}</h3>
             <button
               className={`${
-                editPostId === post._id ? "block" : "hidden"
+                selectedPost === post._id && editPost ? "block" : "hidden"
               } bg-purple-400 hover:bg-purple-600 px-3 py-1 my-1 rounded-md text-white font-bold`}
             >
               Save
